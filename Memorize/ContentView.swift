@@ -40,7 +40,11 @@ struct CardView: View {
                 shape.fill(Color.white)
                 shape.strokeBorder(lineWidth: 3)
                 Text(card.content)
-            } else {
+            }
+            else if card.isMatched{
+                shape.opacity(0)
+            }
+            else {
                 shape.fill()
             }
         }.aspectRatio(2/3, contentMode: .fit)
