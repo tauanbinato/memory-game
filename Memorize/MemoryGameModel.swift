@@ -7,10 +7,13 @@
 
 import Foundation
 
-struct MemoryGame<CardContent> where CardContent: Equatable {
+struct MemoryGameModel<CardContent> where CardContent: Equatable {
+    
+    // - MARK: Properties
     private(set) var cards: Array<Card>
     private var indexOfTheOneAndOnlyOneFaceupCard: Int?
     
+    // - MARK: Initializers
     init (numberOfPairOfCards: Int, createCardContent: (Int) -> CardContent) {
         cards = Array<Card>()
         for pairIndex in 0..<numberOfPairOfCards {
@@ -20,6 +23,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
+    // - MARK: Mutations
     mutating func choose(_ card: Card){
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
            !cards[chosenIndex].isFaceUp ,
@@ -41,11 +45,11 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
 
-    
+    // - MARK: Structures
     struct Card: Identifiable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
-        var content: CardContent
-        var id: Int
+        let content: CardContent
+        let id: Int
     }
 }
