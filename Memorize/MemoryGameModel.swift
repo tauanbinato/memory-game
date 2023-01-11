@@ -11,7 +11,13 @@ struct MemoryGameModel<CardContent> where CardContent: Equatable {
     
     // - MARK: Properties
     private(set) var cards: Array<Card>
-    private var indexOfTheOneAndOnlyOneFaceupCard: Int?
+    
+    // - MARK: Computed Proterties
+    private var indexOfTheOneAndOnlyOneFaceupCard: Int? {
+        get { cards.indices.filter({ index in cards[index].isFaceUp }).oneAndOnly }
+        set { cards.indices.forEach({ index in cards[index].isFaceUp = (index == newValue) })}
+        
+    }
     
     // - MARK: Initializers
     init (numberOfPairOfCards: Int, createCardContent: (Int) -> CardContent) {
@@ -34,14 +40,11 @@ struct MemoryGameModel<CardContent> where CardContent: Equatable {
                         cards[chosenIndex].isMatched = true;
                         cards[potentialMatchIndex].isMatched = true;
                     }
-                    indexOfTheOneAndOnlyOneFaceupCard = nil
+                    cards[chosenIndex].isFaceUp = true
                 } else {
-                    for index in cards.indices {
-                        cards[index].isFaceUp = false
-                    }
                     indexOfTheOneAndOnlyOneFaceupCard = chosenIndex
                 }
-                cards[chosenIndex].isFaceUp.toggle()
+                
         }
     }
 
@@ -51,5 +54,15 @@ struct MemoryGameModel<CardContent> where CardContent: Equatable {
         var isMatched: Bool = false
         let content: CardContent
         let id: Int
+    }
+}
+
+extension Array {
+    var oneAndOnly: Element? {
+        if self.count == 1 {
+            return self.first
+        } else {
+            return nil
+        }
     }
 }

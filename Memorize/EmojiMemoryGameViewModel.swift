@@ -10,6 +10,8 @@ import SwiftUI
 
 class EmojiMemoryGameViewModel: ObservableObject {
     
+    typealias Card = MemoryGameModel<String>.Card
+    
     /* One Way Of Initializing
     private var model: MemoryGameModel<String> =
     MemoryGameModel<String>(numberOfPairOfCards: 2, cardContentFactory: {
@@ -26,7 +28,7 @@ class EmojiMemoryGameViewModel: ObservableObject {
     // MARK: - Initialize a gate to the model
     // Here we are initializing our 'gate' to the model using our own func that reaturns a MemoryGame<String>
     //
-    @Published private var model: MemoryGameModel<String> = EmojiMemoryGameViewModel.createMemoryGame()
+    @Published private var model = EmojiMemoryGameViewModel.createMemoryGame()
     
     private static func createMemoryGame() -> MemoryGameModel<String> {
         
@@ -37,12 +39,13 @@ class EmojiMemoryGameViewModel: ObservableObject {
     
     
     // MARK: - Access to the Model
-    var cards: Array<MemoryGameModel<String>.Card> {
+    var cards: Array<Card> {
         return model.cards
     }
     // MARK: - Intent(s)
     
-    func choose(card: MemoryGameModel<String>.Card) {
+    func choose(card: Card) {
         return model.choose(card)
     }
 }
+

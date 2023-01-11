@@ -15,7 +15,7 @@ struct EmojiMemoryGameView: View {
             ScrollView {
                 LazyVGrid(columns:[GridItem(.adaptive(minimum: 75))]) {
                     ForEach(emojiMemoryGameViewModel.cards) { card in
-                        CardView(card: card).onTapGesture {
+                        CardView(card).onTapGesture {
                             emojiMemoryGameViewModel.choose(card: card)
                         }
                     }
@@ -31,7 +31,11 @@ struct EmojiMemoryGameView: View {
 }
 
 struct CardView: View {
-    var card: MemoryGameModel<String>.Card
+    private let card: EmojiMemoryGameViewModel.Card
+    
+    init (_ card: EmojiMemoryGameViewModel.Card) {
+        self.card = card
+    }
     
     var body: some View {
         ZStack {
